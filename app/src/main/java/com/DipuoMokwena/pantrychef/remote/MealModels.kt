@@ -1,4 +1,4 @@
-package com.DipuoMokwena.pantrychef.data.remote
+package com.DipuoMokwena.pantrychef.remote
 
 data class MealResponse(
     val meals: List<MealDto>?
@@ -10,6 +10,5 @@ data class MealDto(
     val strMealThumb: String?,
     val strCategory: String?,
     val strArea: String?,
-    val strInstructions: String?,
-    val strYoutube: String?
+    val strInstructions: String?
 )

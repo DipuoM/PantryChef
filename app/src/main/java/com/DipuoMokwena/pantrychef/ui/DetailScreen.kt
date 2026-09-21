@@ -13,8 +13,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.AsyncImage
-import com.DipuoMokwena.pantrychef.data.remote.MealDto
-import com.DipuoMokwena.pantrychef.data.remote.RetrofitClient
+import com.DipuoMokwena.pantrychef.remote.RetrofitClient
+import com.DipuoMokwena.pantrychef.remote.MealDto
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
@@ -34,7 +34,7 @@ class DetailViewModel : ViewModel() {
         viewModelScope.launch {
             _state.value = DetailState(isLoading = true)
             try {
-                val result = RetrofitClient.api.getMealById(id)
+                val result = RetrofitClient.api().getMealById(id)
                 _state.value = DetailState(meal = result.meals?.firstOrNull())
             } catch (e: Exception) {
                 _state.value = DetailState(error = e.localizedMessage ?: "Could not load recipe")
