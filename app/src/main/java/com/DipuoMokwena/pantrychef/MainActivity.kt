@@ -1,5 +1,11 @@
 package com.DipuoMokwena.pantrychef
 
+import com.DipuoMokwena.pantrychef.ui.search.SearchScreen
+import com.DipuoMokwena.pantrychef.ui.detail.DetailScreen
+import com.DipuoMokwena.pantrychef.ui.settings.SettingsScreen
+import com.DipuoMokwena.pantrychef.ui.auth.LoginScreen
+import com.DipuoMokwena.pantrychef.ui.auth.RegisterScreen
+import com.DipuoMokwena.pantrychef.ui.auth.ForgotPasswordScreen
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent

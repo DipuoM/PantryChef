@@ -1,4 +1,4 @@
-package com.DipuoMokwena.pantrychef.ui
+package com.DipuoMokwena.pantrychef.ui.search
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*

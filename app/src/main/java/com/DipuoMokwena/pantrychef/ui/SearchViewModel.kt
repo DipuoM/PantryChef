@@ -1,4 +1,4 @@
-package com.DipuoMokwena.pantrychef.ui
+package com.DipuoMokwena.pantrychef.ui.search
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

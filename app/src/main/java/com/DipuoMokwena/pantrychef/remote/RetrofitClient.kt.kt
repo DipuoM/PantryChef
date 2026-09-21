@@ -1,4 +1,4 @@
-package com.DipuoMokwena.pantrychef.remote
+package com.DipuoMokwena.pantrychef.data.remote
 
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
