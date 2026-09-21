@@ -5,16 +5,24 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 
 @Composable
-fun ForgotPasswordScreen(
-    onBackToLogin: () -> Unit,
+fun LoginScreen(
+    onLoginSuccess: () -> Unit,
+    onGoToRegister: () -> Unit,
+    onGoToForgotPassword: () -> Unit,
     viewModel: AuthViewModel = viewModel()
 ) {
     var email by remember { mutableStateOf("") }
+    var password by remember { mutableStateOf("") }
     val state by viewModel.uiState.collectAsState()
+
+    LaunchedEffect(state.isSuccess) {
+        if (state.isSuccess) onLoginSuccess()
+    }
 
     Column(
         modifier = Modifier
@@ -23,9 +31,7 @@ fun ForgotPasswordScreen(
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Text("Reset Password", style = MaterialTheme.typography.headlineMedium)
-        Spacer(modifier = Modifier.height(8.dp))
-        Text("Enter your email and we will send you a reset link.")
+        Text("PantryChef Login", style = MaterialTheme.typography.headlineMedium)
         Spacer(modifier = Modifier.height(24.dp))
 
         OutlinedTextField(
@@ -35,6 +41,16 @@ fun ForgotPasswordScreen(
             singleLine = true,
             modifier = Modifier.fillMaxWidth()
         )
+        Spacer(modifier = Modifier.height(12.dp))
+
+        OutlinedTextField(
+            value = password,
+            onValueChange = { password = it },
+            label = { Text("Password") },
+            singleLine = true,
+            visualTransformation = PasswordVisualTransformation(),
+            modifier = Modifier.fillMaxWidth()
+        )
         Spacer(modifier = Modifier.height(16.dp))
 
         if (state.error != null) {
@@ -42,27 +58,20 @@ fun ForgotPasswordScreen(
             Spacer(modifier = Modifier.height(8.dp))
         }
 
-        if (state.resetEmailSent) {
-            Text(
-                "Reset email sent. Check your inbox and spam folder.",
-                color = MaterialTheme.colorScheme.primary
-            )
-            Spacer(modifier = Modifier.height(8.dp))
-        }
-
         Button(
-            onClick = { viewModel.sendPasswordReset(email) },
+            onClick = { viewModel.login(email, password) },
             enabled = !state.isLoading,
             modifier = Modifier.fillMaxWidth()
         ) {
-            Text(if (state.isLoading) "Sending..." else "Send reset link")
+            Text(if (state.isLoading) "Please wait..." else "Login")
         }
 
-        TextButton(onClick = {
-            viewModel.resetState()
-            onBackToLogin()
-        }) {
-            Text("Back to Login")
+        TextButton(onClick = onGoToForgotPassword) {
+            Text("Forgot password?")
+        }
+
+        TextButton(onClick = onGoToRegister) {
+            Text("Don't have an account? Register")
         }
     }
 }
