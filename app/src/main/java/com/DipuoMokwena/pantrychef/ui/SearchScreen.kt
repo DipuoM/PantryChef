@@ -1,15 +1,16 @@
-package com.DipuoMokwena.pantrychef.ui.search
+package com.DipuoMokwena.pantrychef.ui
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.AsyncImage
-import com.DipuoMokwena.pantrychef.data.remote.MealDto
+import com.DipuoMokwena.pantrychef.remote.MealDto
 
 @Composable
 fun SearchScreen(
@@ -25,7 +26,7 @@ fun SearchScreen(
             .fillMaxSize()
             .padding(16.dp)
     ) {
-        Text("Search Recipes", style = MaterialTheme.typography.headlineMedium)
+        Text(text = "Search Recipes", style = MaterialTheme.typography.headlineMedium)
         Spacer(modifier = Modifier.height(12.dp))
 
         OutlinedTextField(
@@ -49,15 +50,22 @@ fun SearchScreen(
             CircularProgressIndicator()
         }
 
-        if (state.error != null) {
-            Text(state.error!!, color = MaterialTheme.colorScheme.error)
+        val errorMessage = state.error
+        if (errorMessage != null) {
+            Text(text = errorMessage, color = MaterialTheme.colorScheme.error)
         }
 
-        LazyColumn {
+        LazyColumn(modifier = Modifier.weight(1f)) {
             items(state.meals) { meal ->
-                MealRow(meal = meal, onClick = {
-                    meal.idMeal?.let { onMealClick(it) }
-                })
+                MealRow(
+                    meal = meal,
+                    onClick = {
+                        val id = meal.idMeal
+                        if (!id.isNullOrBlank()) {
+                            onMealClick(id)
+                        }
+                    }
+                )
             }
         }
 
@@ -68,7 +76,10 @@ fun SearchScreen(
 }
 
 @Composable
-fun MealRow(meal: MealDto, onClick: () -> Unit) {
+fun MealRow(
+    meal: MealDto,
+    onClick: () -> Unit
+) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -82,8 +93,8 @@ fun MealRow(meal: MealDto, onClick: () -> Unit) {
         )
         Spacer(modifier = Modifier.width(12.dp))
         Column {
-            Text(meal.strMeal ?: "Unknown", style = MaterialTheme.typography.titleMedium)
-            Text(meal.strCategory ?: "")
+            Text(text = meal.strMeal ?: "Unknown")
+            Text(text = meal.strCategory ?: "")
         }
     }
 }

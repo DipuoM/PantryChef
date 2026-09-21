@@ -1,7 +1,6 @@
 package com.DipuoMokwena.pantrychef
 
-import com.DipuoMokwena.pantrychef.ui.search.SearchScreen
-import com.DipuoMokwena.pantrychef.ui.detail.DetailScreen
+import com.DipuoMokwena.pantrychef.ui.SearchScreen
 import com.DipuoMokwena.pantrychef.ui.settings.SettingsScreen
 import com.DipuoMokwena.pantrychef.ui.auth.LoginScreen
 import com.DipuoMokwena.pantrychef.ui.auth.RegisterScreen
@@ -16,11 +15,10 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.DipuoMokwena.pantrychef.ui.DetailScreen
 import com.DipuoMokwena.pantrychef.ui.auth.ForgotPasswordScreen
 import com.DipuoMokwena.pantrychef.ui.auth.LoginScreen
 import com.DipuoMokwena.pantrychef.ui.auth.RegisterScreen
-import com.DipuoMokwena.pantrychef.ui.detail.DetailScreen
-import com.DipuoMokwena.pantrychef.ui.search.SearchScreen
 import com.DipuoMokwena.pantrychef.ui.settings.SettingsScreen
 import com.DipuoMokwena.pantrychef.ui.theme.PantryChefTheme
 import com.google.firebase.auth.FirebaseAuth

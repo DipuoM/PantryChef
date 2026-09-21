@@ -113,3 +113,5 @@ fun SettingsScreen(
         TextButton(onClick = onBack) {
             Text("Back")
         }
+    }
+}

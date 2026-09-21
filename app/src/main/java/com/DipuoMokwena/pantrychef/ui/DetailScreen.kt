@@ -1,5 +1,6 @@
-package com.DipuoMokwena.pantrychef.ui.detail
+package com.DipuoMokwena.pantrychef.ui
 
+import android.app.Activity
 import android.view.WindowManager
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
@@ -13,8 +14,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.AsyncImage
-import com.DipuoMokwena.pantrychef.remote.RetrofitClient
 import com.DipuoMokwena.pantrychef.remote.MealDto
+import com.DipuoMokwena.pantrychef.remote.RetrofitClient
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
@@ -62,7 +63,7 @@ fun DetailScreen(
     }
 
     DisposableEffect(state.cookingMode) {
-        val window = (view.context as? android.app.Activity)?.window
+        val window = (view.context as? Activity)?.window
         if (state.cookingMode) {
             window?.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
         } else {
@@ -79,17 +80,21 @@ fun DetailScreen(
             .padding(16.dp)
             .verticalScroll(rememberScrollState())
     ) {
-        TextButton(onClick = onBack) { Text("Back") }
+        TextButton(onClick = onBack) {
+            Text("Back")
+        }
 
         if (state.isLoading) {
             CircularProgressIndicator()
         }
 
-        if (state.error != null) {
-            Text(state.error!!, color = MaterialTheme.colorScheme.error)
+        val errorMessage = state.error
+        if (errorMessage != null) {
+            Text(text = errorMessage, color = MaterialTheme.colorScheme.error)
         }
 
-        state.meal?.let { meal ->
+        val meal = state.meal
+        if (meal != null) {
             AsyncImage(
                 model = meal.strMealThumb,
                 contentDescription = meal.strMeal,
@@ -98,8 +103,8 @@ fun DetailScreen(
                     .height(220.dp)
             )
             Spacer(modifier = Modifier.height(12.dp))
-            Text(meal.strMeal ?: "", style = MaterialTheme.typography.headlineSmall)
-            Text("${meal.strCategory ?: ""} • ${meal.strArea ?: ""}")
+            Text(text = meal.strMeal ?: "", style = MaterialTheme.typography.headlineSmall)
+            Text(text = "${meal.strCategory ?: ""} • ${meal.strArea ?: ""}")
             Spacer(modifier = Modifier.height(12.dp))
             Button(onClick = { viewModel.toggleCookingMode() }) {
                 Text(if (state.cookingMode) "Exit cooking mode" else "Start cooking")
